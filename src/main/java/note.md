@@ -115,6 +115,47 @@ public ConfigurableApplicationContext run(String... args) {
     CommandLineRunner ioc容器中
 
 ## 自定义starter
-     
+- starter
+    1 这个场景需要使用到的依赖是什么
+    2 如何编写自动配置 
+    3 自动配置类要放在META-INF/spring.factories
+```properties
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+
+org.springframework.boot.autoconfigure.aop.AopAutoConfiguration=\
+  
+org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration=\
+  
+```        
+```java
+// /Users/lyj1996/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/2.1.7.RELEASE/spring-boot-autoconfigure-2.1.7.RELEASE.jar!/org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration.class
+@Configuration //指定这个类是一个配置类
+@ConditionalOnXXX//指定条件成立的情况下自动配置类生效
+@AutoConfigureOrder(-2147483638) //指定自动配置类的顺序
+@AutoConfigureAfter({DispatcherServletAutoConfiguration.class, TaskExecutionAutoConfiguration.class, ValidationAutoConfiguration.class})
+public class WebMvcAutoConfiguration {
+    public static final String DEFAULT_PREFIX = "";
+    public static final String DEFAULT_SUFFIX = "";
+    private static final String[] SERVLET_LOCATIONS = new String[]{"/"};
+
+    public WebMvcAutoConfiguration() {
+    }
+
+    @Bean //给容器中添加组件
+    @ConditionalOnMissingBean({HiddenHttpMethodFilter.class})
+    @ConditionalOnProperty(
+        prefix = "spring.mvc.hiddenmethod.filter",
+        name = {"enabled"},
+        matchIfMissing = true
+    )
+    public OrderedHiddenHttpMethodFilter hiddenHttpMethodFilter() {
+        return new OrderedHiddenHttpMethodFilter();
+    }
+}
+```
+   4 模式
+    启动器：只用来做依赖导入 xxxx-spring-boot-starter
+    专门写自动配置模块 启动器依赖自动配置
     
     

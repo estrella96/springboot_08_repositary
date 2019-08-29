@@ -3,3 +3,10 @@ com.example.springboot_08_repositary.listener.HelloApplicationContextInitializer
 
 org.springframework.boot.SpringApplicationRunListener=\
 com.example.springboot_08_repositary.listener.HelloSpringApplicationRunListener
+
+#org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+#
+#org.springframework.boot.autoconfigure.aop.AopAutoConfiguration=\
+#
+#org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration=\
+#
